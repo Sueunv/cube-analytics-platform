@@ -22,3 +22,5 @@ node_modules/
 # Cube runtime
 cube/cube/.cubestore/
 cube/cube/.cube/
+
+*.pem

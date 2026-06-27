@@ -1,0 +1,57 @@
+name: Deploy Cube Analytics
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker Image
+        run: |
+          docker build -t cube-analytics-platform ./cube
+
+      - name: Tag Docker Image
+        run: |
+          docker tag cube-analytics-platform:latest \
+          ${{ secrets.ECR_REPO }}:latest
+
+      - name: Push Docker Image
+        run: |
+          docker push ${{ secrets.ECR_REPO }}:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+
+          script: |
+            aws ecr get-login-password --region ap-south-1 | \
+            sudo docker login \
+              --username AWS \
+              --password-stdin 266359798362.dkr.ecr.ap-south-1.amazonaws.com
+
+            cd ~/cube
+
+            sudo docker compose pull
+            sudo docker compose up -d
+            sudo docker image prune -f

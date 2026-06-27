@@ -1,0 +1,24 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# Env
+.env
+
+# VSCode
+.vscode/
+
+# Mac
+.DS_Store
+
+# Cube runtime
+cube/cube/.cubestore/
+cube/cube/.cube/

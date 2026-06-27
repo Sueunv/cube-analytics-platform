@@ -1,0 +1,45 @@
+cubes:
+  - name: sales
+    sql_table: public.sales
+    data_source: default
+
+    joins: []
+
+    dimensions:
+      - name: id
+        sql: id
+        type: number
+        primary_key: true
+
+      - name: category
+        sql: category
+        type: string
+
+      - name: city
+        sql: city
+        type: string
+
+      - name: price
+        sql: price
+        type: string
+
+      - name: product_name
+        sql: product_name
+        type: string
+
+      - name: sale_date
+        sql: sale_date
+        type: time
+
+    measures:
+      - name: count
+        type: count
+
+      - name: quantity
+        sql: quantity
+        type: sum
+
+    pre_aggregations:
+      # Pre-aggregation definitions go here.
+      # Learn more in the documentation: https://cube.dev/docs/caching/pre-aggregations/getting-started
+

@@ -26,7 +26,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
-          docker build -t cube-analytics-platform ./cube
+          docker build -t cube-analytics-platform .
 
       - name: Tag Docker Image
         run: |

@@ -22,8 +22,15 @@ services:
       timeout: 5s
       retries: 5
 
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ap-south-1
+        awslogs-group: /cube-analytics-platform/application
+        awslogs-stream: postgres
+
   cube:
-    image: cubejs/cube:latest
+    image: 266359798362.dkr.ecr.ap-south-1.amazonaws.com/cube-analytics-platform:latest
     container_name: cube
 
     restart: unless-stopped
@@ -40,6 +47,13 @@ services:
 
     volumes:
       - ./cube:/cube/conf
+
+    logging:
+      driver: awslogs
+      options:
+        awslogs-region: ap-south-1
+        awslogs-group: /cube-analytics-platform/application
+        awslogs-stream: cube
 
 volumes:
   postgres_data:

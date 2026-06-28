@@ -2,25 +2,19 @@
 .terraform/
 *.tfstate
 *.tfstate.*
-terraform.tfvars
+*.tfplan
 
-# Logs
-*.log
-
-# Node
-node_modules/
-
-# Env
+# Environment
 .env
 
-# VSCode
-.vscode/
+# SSH Keys
+*.pem
 
-# Mac
-.DS_Store
+# Vim
+*.swp
+*.swo
+*.swn
 
 # Cube runtime
 cube/cube/.cubestore/
 cube/cube/.cube/
-
-*.pem
